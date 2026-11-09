@@ -153,7 +153,9 @@
                     return [];
                 }
 
-                var lines = s.split('\n');
+                // Accept CRLF (and a bare CR) line endings. The "$" assertion matches the very end of the
+                // input only, so a line keeping its "\r" would fail to match and be silently dropped.
+                var lines = s.split(/\r\n|\r|\n/);
                 var result = [];
 
                 for (var i = 0; i < lines.length; i++) {

@@ -76,7 +76,10 @@
                 // so "http://host/path" could also be mapped by "https://host".
                 var addressRegExp = new RegExp('^([ \\t]*)(?:[a-zA-Z][a-zA-Z0-9+.\\-]*:\\/\\/)?'
                     + escapeRegExp(mapping.publicHost) + '(?=$|[/?#\\s])', 'i');
-                var lines = text.split('\n');
+                // Clipboard content may use CRLF (or a bare CR) line endings. Normalize them to LF,
+                // otherwise the trailing "\r" is kept and the line would no longer match the url parser
+                // used by the new task page, which drops every line but the last one.
+                var lines = text.split(/\r\n|\r|\n/);
                 var replacedCount = 0;
 
                 for (var i = 0; i < lines.length; i++) {
