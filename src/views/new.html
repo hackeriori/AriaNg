@@ -46,11 +46,16 @@
                                 <div class="form-group has-feedback no-margin" ng-class="{ 'has-error' : newTaskForm.urls.$invalid && newTaskForm.urls.$dirty, 'has-success' : newTaskForm.urls.$valid && newTaskForm.urls.$dirty }">
                                     <textarea name="urls" class="form-control" rows="10" autofocus="autofocus" ng-auto-focus ng-valid-urls
                                               ng-model="context.urls" ng-required="true" ng-keydown="urlTextboxKeyDown($event)"
+                                              ng-paste="urlsPaste($event)" ng-change="clearAddressMappingHint()"
                                               ng-placeholder="'Support multiple URLs, one URL per line.' | translate"></textarea>
                                     <div class="form-control-icon" ng-if="newTaskForm.urls.$dirty">
                                         <i class="fa form-control-feedback" ng-class="{'fa-check':newTaskForm.urls.$valid, 'fa-times':newTaskForm.urls.$invalid}"></i>
                                     </div>
                                 </div>
+                                <p class="address-mapping-hint" ng-if="context.addressMappingReplacedCount > 0">
+                                    <i class="fa fa-exchange"></i>
+                                    <span ng-bind="'format.task.new.address-mapped' | translate: {count: context.addressMappingReplacedCount}"></span>
+                                </p>
                             </div>
                         </div>
                     </div>

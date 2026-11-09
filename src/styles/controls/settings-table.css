@@ -121,6 +121,10 @@
     display: block;
 }
 
+.settings-table .address-mapping-internal-label {
+    margin-top: 6px;
+}
+
 @media (max-width: 767px) {
     .settings-table .setting-key {
         font-weight: bold;

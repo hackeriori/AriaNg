@@ -312,6 +312,22 @@
                     </div>
                     <div class="row">
                         <div class="setting-key setting-key-without-desc col-sm-4">
+                            <span translate>Internal Address Mapping</span>
+                            <span class="description" translate>When pasting download links in the new task page, links starting with the public address will be replaced with the internal address.</span>
+                        </div>
+                        <div class="setting-value col-sm-8">
+                            <em class="multi-line" ng-bind="'Public Address' | translate"></em>
+                            <input class="form-control" type="text" placeholder="https://alist.example.com"
+                                   ng-model="context.settings.addressMappingPublicAddress"
+                                   ng-change="setAddressMappingPublicAddress(context.settings.addressMappingPublicAddress)"/>
+                            <em class="multi-line address-mapping-internal-label" ng-bind="'Internal Address' | translate"></em>
+                            <input class="form-control" type="text" placeholder="http://alist:5244"
+                                   ng-model="context.settings.addressMappingInternalAddress"
+                                   ng-change="setAddressMappingInternalAddress(context.settings.addressMappingInternalAddress)"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="setting-key setting-key-without-desc col-sm-4">
                             <span translate>Import / Export AriaNg Settings</span>
                         </div>
                         <div class="setting-value col-sm-8">

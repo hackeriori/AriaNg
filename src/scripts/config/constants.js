@@ -51,6 +51,8 @@
         confirmTaskRemoval: true,
         includePrefixWhenCopyingFromTaskDetails: true,
         showPiecesInfoInTaskDetailPage: 'le10240',
+        addressMappingPublicAddress: '',
+        addressMappingInternalAddress: '',
         afterRetryingTask: 'task-list-downloading',
         taskListIndependentDisplayOrder: false,
         displayOrder: 'default:asc',

@@ -259,6 +259,14 @@
             ariaNgSettingService.setShowPiecesInfoInTaskDetailPage(value);
         };
 
+        $scope.setAddressMappingPublicAddress = function (value) {
+            ariaNgSettingService.setAddressMappingPublicAddress(value);
+        };
+
+        $scope.setAddressMappingInternalAddress = function (value) {
+            ariaNgSettingService.setAddressMappingInternalAddress(value);
+        };
+
         $scope.setAfterRetryingTask = function (value) {
             ariaNgSettingService.setAfterRetryingTask(value);
         };

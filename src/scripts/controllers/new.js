@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').controller('NewTaskController', ['$rootScope', '$scope', '$location', '$timeout', 'ariaNgCommonService', 'ariaNgLogService', 'ariaNgKeyboardService', 'ariaNgFileService', 'ariaNgSettingService', 'aria2TaskService', 'aria2SettingService', function ($rootScope, $scope, $location, $timeout, ariaNgCommonService, ariaNgLogService, ariaNgKeyboardService, ariaNgFileService, ariaNgSettingService, aria2TaskService, aria2SettingService) {
+    angular.module('ariaNg').controller('NewTaskController', ['$rootScope', '$scope', '$location', '$timeout', '$window', 'ariaNgCommonService', 'ariaNgLogService', 'ariaNgKeyboardService', 'ariaNgFileService', 'ariaNgSettingService', 'ariaNgAddressMappingService', 'aria2TaskService', 'aria2SettingService', function ($rootScope, $scope, $location, $timeout, $window, ariaNgCommonService, ariaNgLogService, ariaNgKeyboardService, ariaNgFileService, ariaNgSettingService, ariaNgAddressMappingService, aria2TaskService, aria2SettingService) {
         var tabStatusItems = [
             {
                 name: 'links',
@@ -117,6 +117,7 @@
                 http: false,
                 bittorrent: false
             },
+            addressMappingReplacedCount: 0,
             exportCommandApiOptions: null
         };
 
@@ -273,6 +274,59 @@
 
                 return false;
             }
+        };
+
+        $scope.urlsPaste = function (event) {
+            var originalEvent = (event && event.originalEvent) || event;
+
+            $scope.context.addressMappingReplacedCount = 0;
+
+            if (!originalEvent) {
+                return;
+            }
+
+            var clipboardData = originalEvent.clipboardData || $window.clipboardData;
+
+            if (!clipboardData || !clipboardData.getData) {
+                return;
+            }
+
+            var pastedText = clipboardData.getData('text/plain') || clipboardData.getData('Text');
+            var result = ariaNgAddressMappingService.replaceAddresses(pastedText);
+
+            if (!result || result.replacedCount < 1) {
+                return;
+            }
+
+            var textarea = originalEvent.target;
+
+            if (!textarea || typeof textarea.selectionStart !== 'number') {
+                return;
+            }
+
+            if (originalEvent.preventDefault) {
+                originalEvent.preventDefault();
+            }
+
+            var currentValue = $scope.context.urls || '';
+            var selectionStart = textarea.selectionStart;
+            var selectionEnd = textarea.selectionEnd;
+            var caretPosition = selectionStart + result.text.length;
+
+            $scope.context.urls = currentValue.substring(0, selectionStart) + result.text + currentValue.substring(selectionEnd);
+            $scope.context.addressMappingReplacedCount = result.replacedCount;
+
+            $timeout(function () {
+                if (textarea.setSelectionRange) {
+                    textarea.setSelectionRange(caretPosition, caretPosition);
+                }
+
+                textarea.focus();
+            });
+        };
+
+        $scope.clearAddressMappingHint = function () {
+            $scope.context.addressMappingReplacedCount = 0;
         };
 
         $scope.getValidUrlsCount = function () {

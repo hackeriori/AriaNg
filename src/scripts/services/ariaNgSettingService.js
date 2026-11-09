@@ -465,6 +465,18 @@
             setShowPiecesInfoInTaskDetailPage: function (value) {
                 setOption('showPiecesInfoInTaskDetailPage', value);
             },
+            getAddressMappingPublicAddress: function () {
+                return getOption('addressMappingPublicAddress');
+            },
+            setAddressMappingPublicAddress: function (value) {
+                setOption('addressMappingPublicAddress', (value || '').trim());
+            },
+            getAddressMappingInternalAddress: function () {
+                return getOption('addressMappingInternalAddress');
+            },
+            setAddressMappingInternalAddress: function (value) {
+                setOption('addressMappingInternalAddress', (value || '').trim());
+            },
             getAfterRetryingTask: function () {
                 return getOption('afterRetryingTask');
             },
